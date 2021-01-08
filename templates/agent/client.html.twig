@@ -1,0 +1,37 @@
+{% extends 'agent/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Clients</h1>
+  <a id="list-add-btn" href="{{ path('agent_client_ajout') }}" role="button" class="btn btn-primary">Ajouter</a>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nom</th>
+          <th scope="col">N° permis</th>
+          <th scope="col">Ville</th>
+          <th scope="col">N° telephone</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for client in clients %}
+        <tr>
+          <th scope="row">{{client.getId()}}</th>
+          <td>{{client.getNom()}}</td>
+          <td>{{client.getNumPermis()}}</td>
+          <td>{{client.getVille()}}</td>
+          <td>{{client.getTel()}}</td>
+          <td>
+            <div id="list-actions">
+              <a id="list-action" href="{{ path('agent_client_modif', {id: client.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+              <a id="list-action" href="{{ path('agent_client_supp', {id: client.getId()}) }}" class="btn btn-outline-danger btn-sm">supprimer</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

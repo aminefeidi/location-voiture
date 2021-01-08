@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agent{% endblock %}
+
+{% block content %}
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Location Voitures </div>
+      <div class="list-group list-group-flush">
+        <a href="{{ path('agent') }}" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="{{ path('agent_voiture') }}" class="list-group-item list-group-item-action bg-light">Voitures</a>
+        <a href="{{ path('agent_client') }}" class="list-group-item list-group-item-action bg-light">Clients</a>
+        <a href="{{ path('agent_contrat') }}" class="list-group-item list-group-item-action bg-light">Contrats</a>
+        <a href="{{ path('agent_facture') }}" class="list-group-item list-group-item-action bg-light">Factures</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <span class="navbar-text"> Bonjour {{app.user.email}} !</span>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        {% block inner_content %}
+            <h1 class="mt-4">AGENT DASHBOARD</h1> 
+        {% endblock %}
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+{% endblock %}

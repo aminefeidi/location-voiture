@@ -1,0 +1,39 @@
+{% extends 'agent/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Contrats</h1>
+  <a id="list-add-btn" href="{{ path('agent_contrat_ajout') }}" role="button" class="btn btn-primary">Ajouter</a>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Client</th>
+          <th scope="col">Voiture</th>
+          <th scope="col">Type contrat</th>
+          <th scope="col">Date depart</th>
+          <th scope="col">Date retour</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contrat in contrats %}
+        <tr>
+          <th scope="row">{{contrat.getId()}}</th>
+          <td>{{contrat.getClient().getNom()}}</td>
+          <td>{{contrat.getVoiture().getMarque}}</td>
+          <td>Type {{contrat.getType()}}</td>
+          <td>{{contrat.getDateDep() | date('d/m/Y')}}</td>
+          <td>{{contrat.getDateRet() | date('d/m/Y')}}</td>
+          <td>
+            <div id="list-actions">
+              <a id="list-action" href="{{ path('agent_contrat_modif', {id: contrat.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+              <a id="list-action" href="{{ path('agent_contrat_supp', {id: contrat.getId()}) }}" class="btn btn-outline-danger btn-sm">supprimer</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Agences</h1>
+  <a id="list-add-btn" href="{{ path('admin_agence_ajout') }}" role="button" class="btn btn-primary">Ajouter</a>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Adresse</th>
+      <th scope="col">Ville</th>
+      <th scope="col">Telephone</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for agence in agences %}
+    <tr>
+      <th scope="row">{{agence.getId()}}</th>
+      <td>{{agence.getNom()}}</td>
+      <td>{{agence.getAdresse()}}</td>
+      <td>{{agence.getVille()}}</td>
+      <td>{{agence.getTel()}}</td>
+      <td>
+        <div id="list-actions">
+          <a id="list-action" href="{{ path('admin_agence_modif', {id: agence.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+          <a id="list-action" href="{{ path('admin_agence_supp', {id: agence.getId()}) }}" role="button" class="btn btn-outline-danger btn-sm">supprimer</a>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

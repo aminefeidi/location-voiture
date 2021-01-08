@@ -1,0 +1,44 @@
+{% extends 'agent/index.html.twig' %} {% block inner_content %}
+{{ form(form) }}
+<h3 id="montant_total">Total = 0 DT</h3>
+{% endblock %} {% block user_scripts %}
+<script>
+	var $client = $("#form_client");
+	// When sport gets selected ...
+	$client.change(function () {
+		// ... retrieve the corresponding form.
+		var $form = $(this).closest("form");
+		// Simulate form data, but only include the selected sport value.
+		var data = {};
+		data[$client.attr("name")] = $client.val();
+		// Submit data via AJAX to the form's action path.
+		$.ajax({
+			url: $form.attr("action"),
+			type: $form.attr("method"),
+			data: data,
+			success: function (html) {
+				// Replace current position field ...
+				$("#form_contrat").replaceWith(
+					// ... with the returned one from the AJAX response.
+					$(html).find("#form_contrat")
+				);
+
+				var $contrat = $("#form_contrat");
+				$contrat.change(function () {
+					let str = $("#form_contrat option:selected").text();
+					if (str && str != "-") {
+						let res = str.split(" : ")[1].split(" - ");
+						let date1 = moment(res[0], "DD/MM/YYYY");
+						let date2 = moment(res[1], "DD/MM/YYYY");
+						let montant = 100 * (date2.diff(date1, "days") + 1);
+						$(montant_total).html("Total = " + montant + " DT");
+					}else{
+            $(montant_total).html("Total = " + 0 + " DT");
+          }
+				});
+				// Position field now displays the appropriate positions.
+			},
+		});
+	});
+</script>
+{% endblock %}

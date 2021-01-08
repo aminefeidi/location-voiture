@@ -1,0 +1,42 @@
+{% extends 'agent/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Factures</h1>
+  <a id="list-add-btn" href="{{ path('agent_facture_ajout') }}" role="button" class="btn btn-primary">Ajouter</a>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Client</th>
+          <th scope="col">Date de facture</th>
+          <th scope="col">Montant</th>
+          <th scope="col">Payée</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for facture in factures %}
+        <tr>
+          <th scope="row">{{facture.getId()}}</th>
+          <td>{{facture.getClient().getNom()}}</td>
+          <td>{{facture.getDateFac() | date('d/m/Y')}}</td>
+          <td>Type {{facture.getMontant()}}</td>
+          {% if facture.getPayee() == 1 %}
+            <td>OUI</td>
+          {% endif %}
+          {% if facture.getPayee() == 0 %}
+            <td>NON</td>
+          {% endif %}
+          <td>
+            <div id="list-actions">
+              <a id="list-action" href="#" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+              <a id="list-action" href="#" class="btn btn-outline-danger btn-sm">supprimer</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

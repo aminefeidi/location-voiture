@@ -1,0 +1,52 @@
+{% extends 'agent/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Voitures</h1>
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Matricule</th>
+          <th scope="col">Marque</th>
+          <th scope="col">Couleur</th>
+          <th scope="col">Carburant</th>
+          <th scope="col">N° de places</th>
+          <th scope="col">Description</th>
+          <th scope="col">Mise en circulation</th>
+          <th scope="col">Agence</th>
+          <th scope="col">Disponibilitè</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for voiture in voitures %}
+        <tr>
+          <th scope="row">{{voiture.getId()}}</th>
+          <td>{{voiture.getMatricule()}}</td>
+          <td>{{voiture.getMarque()}}</td>
+          <td>{{voiture.getCouleur()}}</td>
+          <td>{{voiture.getCarburant()}}</td>
+          <td>{{voiture.getNbrPlace()}}</td>
+          <td>{{voiture.getDescription()}}</td>
+          <td>{{voiture.getDateMiseEnCirculation() | date('d/m/Y')}}</td>
+          <td>{{voiture.getAgence().getNom()}}</td>
+          {% if voiture.getDisponibilite() == 1 %}
+            <td>OUI</td>
+            <td>
+              <div id="list-actions">
+                <a id="list-action" href="{{ path('agent_voiture_louer', {id: voiture.getId()}) }}" role="button" class="btn btn-outline-success btn-sm">Louer</a>
+              </div>
+            </td>
+          {% endif %}
+          {% if voiture.getDisponibilite() == 0 %}
+            <td>NON</td>
+            <td><a id="list-action" href="{{ path('agent_voiture_rendre', {id: voiture.getId()}) }}" role="button" class="btn btn-outline-success btn-sm">Rendre</a></td>
+          {% endif %}
+          
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'admin/index.html.twig' %}
+
+{% block inner_content %}
+  <h1 id="list-title" class="mt-4">Agents</h1>
+  <a id="list-add-btn" href="{{ path('admin_agent_ajout') }}" role="button" class="btn btn-primary">Ajouter</a>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Email</th>
+      <th scope="col">Mot de Passe</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for agent in agents %}
+    <tr>
+      <th scope="row">{{agent.getId()}}</th>
+      <td>{{agent.getEmail()}}</td>
+      <td>{{agent.getMotDePasse()}}</td>
+      <td>
+        <div id="list-actions">
+          <a id="list-action" href="{{ path('admin_agent_modif', {id: agent.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+          <a id="list-action" href="{{ path('admin_agent_supp', {id: agent.getId()}) }}" role="button" class="btn btn-outline-danger btn-sm">supprimer</a>
+        </div>
+        
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
