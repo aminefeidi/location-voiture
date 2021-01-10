@@ -49,8 +49,6 @@ class AgentDashboardController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        //$nbrVoituresNonRendues = 0;
-
         $nbrVoituresNonRendues = $contratRepository->createQueryBuilder('c')
             ->leftJoin('c.voiture','v')
             ->where('c.dateRet < :date AND v.disponibilite = 0 AND v.agence = :agence')
