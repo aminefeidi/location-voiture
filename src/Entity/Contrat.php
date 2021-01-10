@@ -41,7 +41,7 @@ class Contrat
     private $client;
 
     /**
-     * @ORM\OneToOne(targetEntity=Voiture::class, inversedBy="contrat", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Voiture::class, inversedBy="contrat")
      * @ORM\JoinColumn(nullable=false)
      */
     private $voiture;
@@ -116,7 +116,7 @@ class Contrat
         return $this->voiture;
     }
 
-    public function setVoiture(voiture $voiture): self
+    public function setVoiture(?voiture $voiture): self
     {
         $this->voiture = $voiture;
 

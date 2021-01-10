@@ -21,7 +21,7 @@
           <th scope="row">{{facture.getId()}}</th>
           <td>{{facture.getClient().getNom()}}</td>
           <td>{{facture.getDateFac() | date('d/m/Y')}}</td>
-          <td>Type {{facture.getMontant()}}</td>
+          <td>{{facture.getMontant()}} dt</td>
           {% if facture.getPayee() == 1 %}
             <td>OUI</td>
           {% endif %}
@@ -30,8 +30,8 @@
           {% endif %}
           <td>
             <div id="list-actions">
-              <a id="list-action" href="#" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
-              <a id="list-action" href="#" class="btn btn-outline-danger btn-sm">supprimer</a>
+              <a id="list-action" href="{{ path('agent_facture_modif', {id: facture.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
+              <a id="list-action" href="{{ path('agent_facture_supp', {id: facture.getId()}) }}" class="btn btn-outline-danger btn-sm">supprimer</a>
             </div>
           </td>
         </tr>

@@ -43,7 +43,21 @@
 
       <div class="container-fluid">
         {% block inner_content %}
-            <h1 class="mt-4">AGENT DASHBOARD</h1> 
+            <h1 class="mt-4">Dashboard</h1>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Voitures disponibles
+                <span class="badge badge-primary badge-pill">{{ voituresDisp }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Voitures à rendre dans le stock
+                <span class="badge badge-primary badge-pill">{{ voituresNonRendues }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Factures impayées
+                <span class="badge badge-primary badge-pill">{{ facturesImp }}</span>
+              </li>
+            </ul>
         {% endblock %}
       </div>
     </div>

@@ -1,9 +1,26 @@
 {% extends 'agent/index.html.twig' %} {% block inner_content %}
 {{ form(form) }}
+{% if isFacture is defined %}
 <h3 id="montant_total">Total = 0 DT</h3>
-{% endblock %} {% block user_scripts %}
+{% endif %} {% endblock %} {% block user_scripts %} {% if isFacture is defined
+%}
 <script>
 	var $client = $("#form_client");
+	var $contrat = $("#form_contrat");
+	var $dateFac = $("#form_dateFac");
+	const calculMontant = () => {
+		console.log("contrat a changé");
+		let str = $("#form_contrat option:selected").text();
+		if (str && str != "-") {
+			let res = str.split(" : ")[1].split(" - ");
+			let date1 = moment(res[0], "DD/MM/YYYY");
+			let date2 = moment(res[1], "DD/MM/YYYY");
+			let montant = 100 * date2.diff(date1, "days");
+			$(montant_total).html("Total = " + montant + " DT");
+		} else {
+			$(montant_total).html("Total = " + 0 + " DT");
+		}
+	}
 	// When sport gets selected ...
 	$client.change(function () {
 		// ... retrieve the corresponding form.
@@ -11,6 +28,7 @@
 		// Simulate form data, but only include the selected sport value.
 		var data = {};
 		data[$client.attr("name")] = $client.val();
+		data[$dateFac.attr("name")] = $dateFac.val();
 		// Submit data via AJAX to the form's action path.
 		$.ajax({
 			url: $form.attr("action"),
@@ -22,23 +40,12 @@
 					// ... with the returned one from the AJAX response.
 					$(html).find("#form_contrat")
 				);
-
-				var $contrat = $("#form_contrat");
-				$contrat.change(function () {
-					let str = $("#form_contrat option:selected").text();
-					if (str && str != "-") {
-						let res = str.split(" : ")[1].split(" - ");
-						let date1 = moment(res[0], "DD/MM/YYYY");
-						let date2 = moment(res[1], "DD/MM/YYYY");
-						let montant = 100 * (date2.diff(date1, "days") + 1);
-						$(montant_total).html("Total = " + montant + " DT");
-					}else{
-            $(montant_total).html("Total = " + 0 + " DT");
-          }
-				});
+				$contrat = $("#form_contrat");
+				$contrat.change(calculMontant);
 				// Position field now displays the appropriate positions.
 			},
 		});
 	});
+	$contrat.change(calculMontant);
 </script>
-{% endblock %}
+{% endif %} {% endblock %}

@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\VoitureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=VoitureRepository::class)
+ * @UniqueEntity("matricule")
  */
 class Voiture
 {
@@ -18,7 +22,7 @@ class Voiture
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $matricule;
 
@@ -64,9 +68,9 @@ class Voiture
     private $agence;
 
     /**
-     * @ORM\OneToOne(targetEntity=Contrat::class, mappedBy="voiture", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Contrat::class, mappedBy="client")
      */
-    private $contrat;
+    private $contrats;
 
     public function getId(): ?int
     {
@@ -181,19 +185,37 @@ class Voiture
         return $this;
     }
 
-    public function getContrat(): ?Contrat
+    public function __construct()
     {
-        return $this->contrat;
+        $this->contrats = new ArrayCollection();
     }
 
-    public function setContrat(Contrat $contrat): self
+    /**
+     * @return Collection|Contrat[]
+     */
+    public function getContrats(): Collection
     {
-        // set the owning side of the relation if necessary
-        if ($contrat->getVoiture() !== $this) {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): self
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats[] = $contrat;
             $contrat->setVoiture($this);
         }
 
-        $this->contrat = $contrat;
+        return $this;
+    }
+
+    public function removeContrat(Contrat $contrat): self
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            // set the owning side to null (unless already changed)
+            if ($contrat->getVoiture() === $this) {
+                $contrat->setVoiture(null);
+            }
+        }
 
         return $this;
     }

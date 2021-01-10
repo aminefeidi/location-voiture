@@ -9,6 +9,7 @@
       <th scope="col">#</th>
       <th scope="col">Email</th>
       <th scope="col">Mot de Passe</th>
+      <th scope="col">Agence</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
       <th scope="row">{{agent.getId()}}</th>
       <td>{{agent.getEmail()}}</td>
       <td>{{agent.getMotDePasse()}}</td>
+      <td>{{agent.getAgence().getNom()}}</td>
       <td>
         <div id="list-actions">
           <a id="list-action" href="{{ path('admin_agent_modif', {id: agent.getId()}) }}" role="button" class="btn btn-outline-primary btn-sm">modifier</a>
